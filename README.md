@@ -21,7 +21,7 @@
 ## NPM Commands
 1. `npm run test` - Run unit tests
 1. `build:app` - Build <b>lambda</b> functions from <b>src/</b> folders into <b>build/</b> folder
-1. `deploy:app` - Deploy <b>lambda</b> functions from <b>build/</b> folder into <b>AWS account
+1. `deploy:app` - Deploy <b>lambda</b> functions from <b>build/</b> folder into <b>AWS account</b>
 1. `build:doc` - Build <b>API Doc</b> from <b>src/</b> folder into <b>doc/</b> folder
 1. `deploy:doc` - Deploy <b>API Doc</b> from <b>doc/</b> folder into <b>AWS S3</b> bucket
 1. `redeploy` - Runs sequentially `build:app` than `deploy:app` than `build:doc` than `deploy:doc`
