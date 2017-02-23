@@ -116,8 +116,6 @@ class UsersDTO {
                     updatedUser = users[i] = Object.assign(user, userToupdate);
                 }
             });
-            console.log('Users: ', users);
-            console.log('Updated user: ', updatedUser);
             s3.upload(this.getParams({
                 Body: JSON.stringify(users)
             }), (err, data) => {
