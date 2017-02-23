@@ -1,0 +1,7 @@
+{
+  "name": "serverless-workshop",
+  "version": "0.1.0",
+  "description": "apiDoc basic example",
+  "title": "API Doc for serverless workshop",
+  "url" : "https://71ffja5vta.execute-api.eu-west-1.amazonaws.com/dev"
+}
