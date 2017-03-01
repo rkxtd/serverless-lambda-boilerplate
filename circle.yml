@@ -4,7 +4,7 @@ machine:
     Europe/Kiev # Set the timezone
   node:
     version:
-      6.x
+      6.10.0
   environment:
     CIRCLE_ENV: test
 dependencies:
