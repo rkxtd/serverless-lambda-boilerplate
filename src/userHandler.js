@@ -8,7 +8,7 @@ const UsersDataSource = new UsersDTO();
 
 /**
  * @api {get} /users/ Get All Users
- * @apiVersion 0.1.0
+ * @apiVersion 0.0.0
  * @apiName UsersGet
  * @apiGroup User
  *
