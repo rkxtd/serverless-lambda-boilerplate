@@ -9,7 +9,7 @@ machine:
     CIRCLE_ENV: test
 dependencies:
   pre:
-    - npm install apidoc serverless -g
+    - npm install apidoc serverless
 
   override:
     - npm install
