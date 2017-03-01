@@ -22,4 +22,4 @@ test:
     - npm run redeploy
 notify:
   webhooks:
-    - url: https://hooks.slack.com/services/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
+    - url: https://hooks.slack.com/services/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
