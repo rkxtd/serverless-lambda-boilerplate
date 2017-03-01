@@ -2,7 +2,7 @@
 machine:
   timezone:
     Europe/Kiev # Set the timezone
-  nodejs:
+  node:
     version:
       6.x
   environment:
