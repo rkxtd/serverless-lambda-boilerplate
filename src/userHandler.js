@@ -1,134 +1,9 @@
 'use strict';
-import AWS from 'aws-sdk';
-import config from './config';
-const s3 = new AWS.S3();
+import UsersDTO from './dto/Users';
+import { expect } from  'chai';
+import ResponseHelper from './helpers/Response';
 
-class Users {
-    constructor(users) {
-        this.users = users;
-    }
-
-    getUserById(id) {
-        let result = {};
-
-        this.users.forEach(function(record) {
-            if (record.id === id) {
-                result = record;
-                return false;
-            }
-        });
-
-        return result;
-    }
-
-    getAllUsers() {
-        return this.users;
-    }
-}
-
-class ResponseHelper {
-    static generateSuccessResponse(response) {
-        return {
-            statusCode: 200,
-            body: JSON.stringify(response)
-        }
-    }
-
-    static generateErrorResponse(error, code) {
-        return {
-            statusCode: code || error.statusCode || 500,
-            body: JSON.stringify(error)
-        }
-    }
-}
-
-class UsersDTO {
-    constructor() {
-
-        this.usersResource = {
-            Bucket: config.aws.s3,
-            Key: 'resources/users.json'
-        };
-        this.UsersCollection = null;
-        this.isUsersLoaded = false;
-        this.usersLoadError = null;
-    }
-
-    getParams(additionalParams) {
-        return Object.assign(this.usersResource, additionalParams);
-    }
-
-    fetchUsers(errCB, doneCB, id = null) {
-        console.log('Fetching started', this.isUsersLoaded, this.getParams());
-        let me = this;
-        if (!this.isUsersLoaded) {
-            s3.getObject(this.getParams(), function(err, data) {
-                console.log('Fetching finished ', err, data);
-                if (err) {
-                    me.usersLoadError = err;
-                    errCB(this.usersLoadError);
-                } else {
-                    this.UsersCollection = new Users(JSON.parse(data.Body.toString('utf8')));
-                    this.isUsersLoaded = true;
-                    if (id) {
-                        doneCB(this.UsersCollection.getUserById(id));
-                    } else {
-                        doneCB(this.UsersCollection.getAllUsers());
-                    }
-                }
-            });
-        } else {
-            if (id) {
-                doneCB(this.UsersCollection.getUserById(id));
-            } else {
-                doneCB(this.UsersCollection.getAllUsers());
-            }
-            return;
-        }
-    }
-
-    fetchUserById(id, errCB, doneCB) {
-        this.fetchUsers(errCB, doneCB, id);
-    }
-
-    createUser(user, errCB, doneCB) {
-        this.fetchUsers(err => errCB(err), users => {
-            user.id = Math.floor((Math.random() * 10000000) + 1);
-            users.push(user);
-
-            s3.upload(this.getParams({
-                Body: JSON.stringify(users)
-            }), (err, data) => {
-                if (err) {
-                    return errCB(err);
-                }
-
-                doneCB(data)
-            });
-        });
-    }
-
-    updateUser(userToupdate, errCB, doneCB) {
-        let updatedUser = {};
-        this.fetchUsers(err => errCB(err), users => {
-            users.forEach((user, i)=> {
-                if (user.id === userToupdate.id) {
-                    updatedUser = users[i] = Object.assign(user, userToupdate);
-                }
-            });
-            s3.upload(this.getParams({
-                Body: JSON.stringify(users)
-            }), (err, data) => {
-                if (err) {
-                    return errCB(err);
-                }
-
-                doneCB(updatedUser)
-            });
-        });
-    }
-}
-
+console.log(UsersDTO);
 const UsersDataSource = new UsersDTO();
 
 /**
@@ -156,7 +31,6 @@ module.exports.users = (event, context, callback) => {
             context.done();
         }
     );
-
 };
 
 /**
@@ -216,11 +90,12 @@ module.exports.user = (event, context, callback) => {
  *
  * @apiParam {String} firstName User First Name.
  * @apiParam {String} lastName User Last Name.
+ * @apiParam {Number} [age] Age of the user
  *
  * @apiSuccess {Number} id  Just created user id.
  * @apiSuccess {String} firstName User First Name.
  * @apiSuccess {String} lastName User Last Name.
- * @apiSuccess {Number} [age] Age of the user
+ * @apiSuccess {Number} age Age of the user
  *
  * @apiError {String} error Error Message.
  */
@@ -275,7 +150,7 @@ module.exports.create = (event, context, callback) => {
  * @apiSuccess {Number} id  User Id.
  * @apiSuccess {String} firstName User First Name.
  * @apiSuccess {String} lastName User Last Name.
- * @apiSuccess {Number} [age] Age of the user
+ * @apiSuccess {Number} age Age of the user
  *
  * @apiError {Number} statusCode ErrorCode.
  * @apiError {String} error Error Message.

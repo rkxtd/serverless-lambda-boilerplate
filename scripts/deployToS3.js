@@ -1,5 +1,5 @@
 var s3 = require('s3');
-var config = require('../config');
+var config = require('../src/config');
 
 var client = s3.createClient({
     s3Options: {

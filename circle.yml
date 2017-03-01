@@ -1,0 +1,25 @@
+## Customize the test machine
+machine:
+  timezone:
+    Europe/Kiev # Set the timezone
+  nodejs:
+    version:
+      6.x
+  environment:
+    CIRCLE_ENV: test
+dependencies:
+  pre:
+    - npm install apidoc serverless
+
+  override:
+    - npm install
+  cache_directories:
+    - "node_modules"
+test:
+  override:
+    - npm test
+  post:
+    - npm run redeploy
+notify:
+  webhooks:
+    - url: https://hooks.slack.com/services/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

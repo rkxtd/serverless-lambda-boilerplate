@@ -7,21 +7,29 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "test",
+    "test": "echo 'Test should be added'",
     "build:app": "./node_modules/.bin/babel src --out-dir build/",
     "deploy:app": "(cd build && serverless deploy --region eu-west-1)",
     "build:doc": "apidoc -i src -o doc",
     "deploy:doc": "node ./scripts/deployToS3.js",
-    "redeploy": "cp config.js build/ && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
+    "redeploy": "cp src/config.js build/ && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
   },
   "author": "xcomanche@gmail.com",
   "license": "MIT",
   "devDependencies": {
     "aws-sdk": "^2.16.0",
     "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
     "babel-preset-babili": "0.0.11",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-minify": "0.0.0",
+    "chai": "^3.5.0",
+    "lambda-tester": "^2.7.0",
+    "mocha": "^3.2.0",
+    "mock-require": "^2.0.1",
     "s3": "^4.4.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0"
   }
 }
