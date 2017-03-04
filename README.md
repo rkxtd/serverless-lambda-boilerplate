@@ -13,11 +13,9 @@
 
 ## Installation
 1. Install node.js 6.x
-1. Install <b>serverless</b> <br />`sudo npm install serverless -g`
-1. Install <b>apidoc</b> <br /> `sudo npm install apidoc -g`
-1. clone the repo and navigate to the project directory
+1. Clone the repo and navigate to the project directory
 1. `npm install`
-1. Edit `config.js` in the root directory, and specify your params. For more information refer to <b>Setup config</b> section.
+1. Edit `src/config.js` and specify your params. For more information refer to <b>Setup config</b> section.
 1. To test demo version of the app hit `npm run redeploy`
 
 ## NPM Commands
@@ -27,6 +25,15 @@
 1. `build:doc` - Build <b>API Doc</b> from <b>src/</b> folder into <b>doc/</b> folder
 1. `deploy:doc` - Deploy <b>API Doc</b> from <b>doc/</b> folder into <b>AWS S3</b> bucket
 1. `redeploy` - Runs sequentially `build:app` than `deploy:app` than `build:doc` than `deploy:doc`
+
+## Setup config
+TBD
+
+## Setup s3 buckets
+TBD
+
+## Setup circle.ci integration
+TBD
 
 ## Contribution
 This is free and opensource product. Just take and use it as you want to :)
