@@ -6,7 +6,6 @@ const s3 = new AWS.S3();
 
 export default class UsersDTO {
     constructor() {
-
         this.usersResource = {
             Bucket: config.aws.s3,
             Key: 'resources/users.json'
@@ -23,16 +22,15 @@ export default class UsersDTO {
     fetchUsers(errCB, doneCB, id = null) {
         let me = this;
         if (!this.isUsersLoaded) {
-            s3.getObject(this.getParams(), function(err, data) {
-                console.log('Fetching finished ', err, data);
+            s3.getObject(this.getParams(), (err, data) => {
                 if (err) {
                     me.usersLoadError = err;
                     errCB(this.usersLoadError);
                 } else {
-                    this.UsersCollection = new Users(JSON.parse(data.Body.toString('utf8')));
-                    this.isUsersLoaded = true;
+                    me.UsersCollection = new Users(JSON.parse(data.Body.toString('utf8')));
+                    me.isUsersLoaded = true;
                     if (id) {
-                        doneCB(this.UsersCollection.getUserById(id));
+                        doneCB(this.UsersCollection.getUser(id));
                     } else {
                         doneCB(this.UsersCollection.getAllUsers());
                     }
@@ -40,15 +38,16 @@ export default class UsersDTO {
             });
         } else {
             if (id) {
-                doneCB(this.UsersCollection.getUserById(id));
+                doneCB(this.UsersCollection.getUser(id));
             } else {
                 doneCB(this.UsersCollection.getAllUsers());
             }
+
             return;
         }
     }
 
-    fetchUserById(id, errCB, doneCB) {
+    fetchUser(id, errCB, doneCB) {
         this.fetchUsers(errCB, doneCB, id);
     }
 

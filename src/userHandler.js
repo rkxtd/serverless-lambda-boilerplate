@@ -1,6 +1,5 @@
 'use strict';
 import UsersDTO from './dto/Users';
-import { expect } from  'chai';
 import ResponseHelper from './helpers/Response';
 
 console.log(UsersDTO);
@@ -58,7 +57,7 @@ module.exports.user = (event, context, callback) => {
         }));
         context.done();
     } else {
-        UsersDataSource.fetchUserById(
+        UsersDataSource.fetchUser(
             userId,
             err => {
                 callback(null, ResponseHelper.generateErrorResponse(err));

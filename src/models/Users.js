@@ -3,7 +3,7 @@ export default class Users {
         this.users = users;
     }
 
-    getUserById(id) {
+    getUser(id) {
         let result = {};
 
         this.users.forEach(function(record) {
