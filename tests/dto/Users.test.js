@@ -1,17 +1,14 @@
 import { expect } from  'chai';
 import AWS from 'aws-sdk-mock';
 
-var reload = require('require-reload')(require);
+const reload = require('require-reload')(require);
 const UsersMock = '[{ "firstName": "FirstName1", "lastName": "LastName1", "age": 21, "id": 1 }, { "firstName": "FirstName2", "lastName": "LastName2", "age": 34, "id": 2 }, { "firstName": "FirstName3", "lastName": "LastName3", "age": 11, "id": 3 }]';
 const UserMock = '{ "firstName": "FirstName1", "lastName": "LastName1", "age": 21, "id": 1 }';
 
 describe( 'dto/Users GET', function() {
     it('Fetch All Users Success', done => {
-
-        AWS.mock('S3', 'getObject', (params, callback) => {
-            callback(null, {Body: UsersMock});
-        });
-        let UsersDTO = reload('../../src/dto/Users');
+        AWS.mock('S3', 'getObject', (params, callback) => { callback(null, {Body: UsersMock}); });
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().fetchUsers(err => {
         }, data => {
             expect(data.length).to.be.eq(3);
@@ -21,11 +18,8 @@ describe( 'dto/Users GET', function() {
     });
 
     it('Fetch All Users Fail', done => {
-
-        AWS.mock('S3', 'getObject', (params, callback) => {
-            callback({error: 'error message'});
-        });
-        let UsersDTO = reload('../../src/dto/Users');
+        AWS.mock('S3', 'getObject', (params, callback) => { callback({error: 'error message'}); });
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().fetchUsers(err => {
             expect(err.error).to.be.eq('error message');
             AWS.restore('S3');
@@ -37,9 +31,8 @@ describe( 'dto/Users GET', function() {
 
 describe( 'dto/User GET', function() {
     it( 'Fetch One User Success', done => {
-
         AWS.mock('S3', 'getObject', (params, callback) => { callback(null, { Body: UsersMock }); });
-        let UsersDTO = reload('../../src/dto/Users');
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().fetchUser(2, err => {}, data => {
             expect(data.firstName).to.be.eq('FirstName2');
             AWS.restore('S3');
@@ -48,9 +41,8 @@ describe( 'dto/User GET', function() {
     });
 
     it( 'Fetch One User Fail', done => {
-
         AWS.mock('S3', 'getObject', (params, callback) => { callback({ error: 'error message' }); });
-        let UsersDTO = reload('../../src/dto/Users');
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().fetchUser(2, err => {
             expect(err.error).to.be.eq('error message');
             AWS.restore('S3');
@@ -61,9 +53,8 @@ describe( 'dto/User GET', function() {
 
 describe( 'dto/User POST', function() {
     it( 'Create User Success', done => {
-
         AWS.mock('S3', 'upload', (params, callback) => { callback(null, { Body: UserMock }); });
-        let UsersDTO = reload('../../src/dto/Users');
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().createUser({
             firstName: UserMock.firstName,
             lastName: UserMock.lastName,
@@ -77,9 +68,8 @@ describe( 'dto/User POST', function() {
     });
 
     it( 'Create User Fail', done => {
-
         AWS.mock('S3', 'upload', (params, callback) => { callback({ error: 'error message' }); });
-        let UsersDTO = reload('../../src/dto/Users');
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().createUser({
             firstName: UserMock.firstName,
             lastName: UserMock.lastName,
@@ -96,8 +86,7 @@ describe( 'dto/User PUT', function() {
     it( 'Update User Success', done => {
         AWS.mock('S3', 'getObject', (params, callback) => { callback(null, { Body: UsersMock }); });
         AWS.mock('S3', 'upload', (params, callback) => { callback(null, { Body: Object.assign(UserMock, {firstName: 'NewFirstName1'})}); });
-
-        let UsersDTO = reload('../../src/dto/Users');
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().updateUser({
             id: 1,
             firstName: 'NewFirstName1'
@@ -113,7 +102,7 @@ describe( 'dto/User PUT', function() {
     it( 'Update User Fail', done => {
         AWS.mock('S3', 'getObject', (params, callback) => { callback(null, { Body: UsersMock }); });
         AWS.mock('S3', 'upload', (params, callback) => { callback({ error: 'error message' }); });
-        let UsersDTO = reload('../../src/dto/Users');
+        const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().updateUser({
             id: 1,
             firstName: 'NewFirstName1'
