@@ -70,6 +70,10 @@ functions:
         handler: userHandler.update
         events: # The Events that trigger this Function
           - http: put user/update
+  userDelete: # A Function
+          handler: userHandler.delete
+          events: # The Events that trigger this Function
+            - http: delete user/delete
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

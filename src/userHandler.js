@@ -7,7 +7,7 @@ const UsersDataSource = new UsersDTO();
 
 /**
  * @api {get} /users/ Get All Users
- * @apiVersion 0.0.0
+ * @apiVersion 0.1.0
  * @apiName UsersGet
  * @apiGroup User
  *
@@ -87,6 +87,8 @@ module.exports.user = (event, context, callback) => {
  * @apiName UserPost
  * @apiGroup User
  *
+ * @apiVersion 0.1.0
+ *
  * @apiParam {String} firstName User First Name.
  * @apiParam {String} lastName User Last Name.
  * @apiParam {Number} [age] Age of the user
@@ -120,7 +122,7 @@ module.exports.create = (event, context, callback) => {
         newUser,
         err => {
             callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while creating user',
+                error: 'Error while updating user',
                 input: event,
                 context: err,
                 statusCode: err.statusCode
@@ -140,6 +142,8 @@ module.exports.create = (event, context, callback) => {
  * @api {put} /user/:id Edit User by ID
  * @apiName userPut
  * @apiGroup User
+ *
+ * @apiVersion 0.1.0
  *
  * @apiParam {Number} id Existing user unique ID.
  * @apiParam {String} [firstName] User First Name.
@@ -197,6 +201,58 @@ module.exports.update = (event, context, callback) => {
         updatedUser => {
             callback(null, ResponseHelper.generateSuccessResponse({
                 results: updatedUser
+            }));
+            context.done();
+        }
+    );
+};
+
+/**
+ * @api {delete} /user/:id Delete User by ID
+ * @apiName userDelete
+ * @apiGroup User
+ *
+ * @apiVersion 0.2.0
+ *
+ * @apiParam {Number} id Existing user unique ID.
+ *
+ * @apiSuccess {Number} id  User Id.
+ * @apiSuccess {String} firstName User First Name.
+ * @apiSuccess {String} lastName User Last Name.
+ * @apiSuccess {Number} age Age of the user
+ *
+ * @apiError {Number} statusCode ErrorCode.
+ * @apiError {String} error Error Message.
+ */
+module.exports.delete = (event, context, callback) => {
+    const queryParams = event.queryStringParameters || event;
+    if (!queryParams || !queryParams.id) {
+        callback(null, ResponseHelper.generateErrorResponse({
+            error: 'User ID is required',
+            input: event,
+            statusCode: 502
+        }));
+
+        context.done();
+        return ;
+    }
+
+    const userIdToDelete = parseInt(queryParams.id);
+
+    UsersDataSource.deleteUser(
+        userIdToDelete,
+        err => {
+            callback(null, ResponseHelper.generateErrorResponse({
+                error: 'Error while deleting user',
+                input: event,
+                context: err,
+                statusCode: err.statusCode
+            }));
+            context.done();
+        },
+        deletedUser => {
+            callback(null, ResponseHelper.generateSuccessResponse({
+                results: deletedUser
             }));
             context.done();
         }

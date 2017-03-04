@@ -68,12 +68,12 @@ export default class UsersDTO {
         });
     }
 
-    updateUser(userToupdate, errCB, doneCB) {
+    updateUser(userToUpdate, errCB, doneCB) {
         let updatedUser = {};
         this.fetchUsers(err => errCB(err), users => {
             users.forEach((user, i)=> {
-                if (user.id === userToupdate.id) {
-                    updatedUser = users[i] = Object.assign(user, userToupdate);
+                if (user.id === userToUpdate.id) {
+                    updatedUser = users[i] = Object.assign(user, userToUpdate);
                 }
             });
             s3.upload(this.getParams({
@@ -84,6 +84,27 @@ export default class UsersDTO {
                 }
 
                 doneCB(updatedUser)
+            });
+        });
+    }
+
+    deleteUser(userIdToDelete, errCB, doneCB) {
+        let deletedUser = {};
+        this.fetchUsers(err => errCB(err), users => {
+            users.forEach((user, i)=> {
+                if (user.id === userIdToDelete) {
+                    deletedUser = user;
+                    users.splice(i, 1);
+                }
+            });
+            s3.upload(this.getParams({
+                Body: JSON.stringify(users)
+            }), (err, data) => {
+                if (err) {
+                    return errCB(err);
+                }
+
+                doneCB(deletedUser)
             });
         });
     }

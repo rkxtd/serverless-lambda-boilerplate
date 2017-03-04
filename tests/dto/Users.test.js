@@ -113,3 +113,29 @@ describe( 'dto/User PUT', function() {
         }, data => {});
     });
 });
+
+describe( 'dto/User Delete', function() {
+    it( 'Delete User Success', done => {
+        AWS.mock('S3', 'getObject', (params, callback) => { callback(null, { Body: UsersMock }); });
+        AWS.mock('S3', 'upload', (params, callback) => { callback(null, { Body: UserMock }); });
+        const UsersDTO = reload('../../src/dto/Users');
+        new UsersDTO.default().deleteUser(1, err => {}, data => {
+            expect(data.firstName).to.be.eq('FirstName1');
+            expect(data.age).to.be.eq(21);
+            expect(data.id).to.be.eq(1);
+            AWS.restore('S3');
+            done();
+        });
+    });
+
+    it( 'Delete User Fail', done => {
+        AWS.mock('S3', 'getObject', (params, callback) => { callback(null, { Body: UsersMock }); });
+        AWS.mock('S3', 'upload', (params, callback) => { callback({ error: 'error message' }); });
+        const UsersDTO = reload('../../src/dto/Users');
+        new UsersDTO.default().deleteUser(1, err => {
+            expect(err.error).to.be.eq('error message');
+            AWS.restore('S3');
+            done();
+        }, data => {});
+    });
+});
