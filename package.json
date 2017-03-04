@@ -1,20 +1,21 @@
 {
-  "name": "itweek-workshop",
+  "name": "serverless-lambda-boilerplate",
   "version": "0.2.1",
-  "description": "itweek workshop for epam employees about using serverless microarchitecture",
+  "description": "boilerplate for creating serverless microservices with serverless framework and aws lambda. es6 with babel transpiler, and mocha unit tests runner",
   "main": "index.js",
   "directories": {
-    "doc": "doc"
+    "doc": "doc",
+    "build": "build"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register tests/**/*",
     "build:app": "./node_modules/.bin/babel src --out-dir build/",
-    "deploy:app": "(cd build && ./node_modules/.bin/serverless deploy --region eu-west-1)",
+    "deploy:app": "(cd build && ../node_modules/.bin/serverless deploy --region eu-west-1)",
     "build:doc": "node ./scripts/generateApidocConfig.js && ./node_modules/.bin/apidoc -i src -o doc",
     "deploy:doc": "node ./scripts/deployToS3.js",
     "redeploy": "cp src/config.js build/ && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
   },
-  "author": "xcomanche@gmail.com",
+  "author": "Roman Shuvaryk <xcomanche@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "apidoc": "^0.17.5",

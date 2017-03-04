@@ -1,8 +1,6 @@
 'use strict';
 import UsersDTO from './dto/Users';
 import ResponseHelper from './helpers/Response';
-
-console.log(UsersDTO);
 const UsersDataSource = new UsersDTO();
 
 /**
