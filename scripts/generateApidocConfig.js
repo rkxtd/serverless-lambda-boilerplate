@@ -7,7 +7,7 @@ const apiDocConfig = {
     "version": pjson.version,
     "description": config.apidoc.desc,
     "title": config.apidoc.title,
-    "url" : config.apidoc.url
+    "url" : config.aws.url
 };
 
 jsonfile.writeFileSync('./apidoc.json', apiDocConfig);

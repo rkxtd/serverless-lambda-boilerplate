@@ -10,13 +10,14 @@
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register tests/**/*",
     "build:app": "./node_modules/.bin/babel src --out-dir build/",
     "deploy:app": "(cd build && serverless deploy --region eu-west-1)",
-    "build:doc": "node ./scripts/generateApidocConfig.js && apidoc -i src -o doc",
+    "build:doc": "node ./scripts/generateApidocConfig.js && ./node_modules/.bin/apidoc -i src -o doc",
     "deploy:doc": "node ./scripts/deployToS3.js",
     "redeploy": "cp src/config.js build/ && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
   },
   "author": "xcomanche@gmail.com",
   "license": "MIT",
   "devDependencies": {
+    "apidoc": "^0.17.5",
     "aws-sdk": "^2.16.0",
     "aws-sdk-mock": "^1.6.1",
     "babel-cli": "^6.23.0",
