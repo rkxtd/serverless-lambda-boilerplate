@@ -1,5 +1,7 @@
 # serverless-workshop
 
+[![CircleCI](https://circleci.com/gh/xcomanche/serverless-workshop/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-workshop/tree/master)
+
 ## Prerequisites
 1. You should have AWS account activated.
 1. Create 2 s3 buckets. One of those buckets should be a static website hosting. <br/>For more information refer to <b>Setup s3 buckets</b> section.
