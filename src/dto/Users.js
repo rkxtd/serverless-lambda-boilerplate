@@ -63,7 +63,7 @@ export default class UsersDTO {
                     return errCB(err);
                 }
 
-                doneCB(data)
+                doneCB(JSON.parse(data.Body.toString('utf8')))
             });
         });
     }
