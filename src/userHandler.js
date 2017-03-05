@@ -4,7 +4,7 @@ import ResponseHelper from './helpers/Response';
 const UsersDataSource = new UsersDTO();
 
 /**
- * @api {get} /users/ Get All Users
+ * @api {get} /users/ GetAll
  * @apiVersion 0.1.0
  * @apiName UsersGet
  * @apiGroup User
@@ -31,7 +31,7 @@ module.exports.users = (event, context, callback) => {
 };
 
 /**
- * @api {get} /user/:id Get User by ID
+ * @api {get} /user/:id Get One
  * @apiVersion 0.1.0
  * @apiName UserGet
  * @apiGroup User
@@ -81,7 +81,7 @@ module.exports.user = (event, context, callback) => {
 };
 
 /**
- * @api {post} /user/ Create User
+ * @api {post} /user/ Create
  * @apiName UserPost
  * @apiGroup User
  *
@@ -137,7 +137,7 @@ module.exports.create = (event, context, callback) => {
 };
 
 /**
- * @api {put} /user/:id Edit User by ID
+ * @api {put} /user/:id Edit
  * @apiName userPut
  * @apiGroup User
  *
@@ -206,7 +206,7 @@ module.exports.update = (event, context, callback) => {
 };
 
 /**
- * @api {delete} /user/:id Delete User by ID
+ * @api {delete} /user/:id Delete
  * @apiName userDelete
  * @apiGroup User
  *
