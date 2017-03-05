@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "boilerplate for creating serverless microservices with serverless framework and aws lambda. es6 with babel transpiler, and mocha unit tests runner",
   "main": "index.js",
+  "url": "git@github.com:xcomanche/serverless-lambda-boilerplate.git",
   "directories": {
     "doc": "doc",
     "build": "build"
