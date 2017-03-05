@@ -9,8 +9,6 @@ machine:
     CIRCLE_ENV: test
 dependencies:
   pre:
-    - npm install apidoc serverless -g
-
   override:
     - npm install
   cache_directories:

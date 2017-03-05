@@ -65,15 +65,15 @@ functions:
   userCreate: # A Function
       handler: userHandler.create
       events: # The Events that trigger this Function
-        - http: post user/create
+        - http: post user
   userUpdate: # A Function
         handler: userHandler.update
         events: # The Events that trigger this Function
-          - http: put user/update
+          - http: put user
   userDelete: # A Function
           handler: userHandler.delete
           events: # The Events that trigger this Function
-            - http: delete user/delete
+            - http: delete user
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
