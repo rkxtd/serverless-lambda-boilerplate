@@ -54,6 +54,7 @@ describe( 'dto/S3/User GET', function() {
 describe( 'dto/S3/User POST', function() {
     it( 'Create User Success', done => {
         AWS.mock('S3', 'upload', (params, callback) => { callback(null, { Body: UserMock }); });
+        AWS.mock('S3', 'getObject', (params, callback) => { callback(null, { Body: UsersMock }); });
         const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().createUser({
             firstName: UserMock.firstName,
@@ -69,6 +70,7 @@ describe( 'dto/S3/User POST', function() {
 
     it( 'Create User Fail', done => {
         AWS.mock('S3', 'upload', (params, callback) => { callback({ error: 'error message' }); });
+        AWS.mock('S3', 'getObject', (params, callback) => { callback({ error: 'error message' }); });
         const UsersDTO = reload('../../src/dto/Users');
         new UsersDTO.default().createUser({
             firstName: UserMock.firstName,

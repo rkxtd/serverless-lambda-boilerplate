@@ -4,5 +4,4 @@
 doc
 node_modules
 build/*
-!build/serverless.yml
 apidoc.json

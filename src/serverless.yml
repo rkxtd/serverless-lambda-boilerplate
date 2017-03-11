@@ -1,0 +1,39 @@
+service: serverless-lambda-boilerplate
+provider:
+  name: aws
+  runtime: nodejs4.3
+#  iamRoleStatements:
+#      - Effect: "Allow"
+#        Action:
+#          - "s3:ListBucket"
+#        Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "itweek-workshop" } ] ]  }
+#      - Effect: "Allow"
+#        Action:
+#          - "s3:PutObject"
+#        Resource:
+#          Fn::Join:
+#            - ""
+#            - - "arn:aws:s3:::"
+#              - "Ref" : "itweek-workshop"
+
+functions:
+  usersGet: # A Function
+    handler: userHandler.users
+    events: # The Events that trigger this Function
+      - http: get users
+  userGet: # A Function
+      handler: userHandler.user
+      events: # The Events that trigger this Function
+        - http: get user
+  userCreate: # A Function
+      handler: userHandler.create
+      events: # The Events that trigger this Function
+        - http: post user
+  userUpdate: # A Function
+        handler: userHandler.update
+        events: # The Events that trigger this Function
+          - http: put user
+  userDelete: # A Function
+          handler: userHandler.delete
+          events: # The Events that trigger this Function
+            - http: delete user
