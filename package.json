@@ -15,7 +15,7 @@
     "deploy:app": "(cd build && ../node_modules/.bin/serverless deploy --region eu-west-1)",
     "build:doc": "node ./scripts/generateApidocConfig.js && ./node_modules/.bin/apidoc -i src -o doc",
     "deploy:doc": "node ./scripts/deployToS3.js",
-    "redeploy": "npm run redeploy && cp src/config.js build/ && cp src/serverless.yml build/ && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
+    "redeploy": "npm run clean && cp src/config.js build/ && cp src/serverless.yml build/ && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
   },
   "author": "Roman Shuvaryk <xcomanche@gmail.com>",
   "license": "MIT",
