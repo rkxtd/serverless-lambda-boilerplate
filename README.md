@@ -1,4 +1,4 @@
-# serverless-workshop
+# serverless-lambda-boilerplate
 
 [![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate)
 
@@ -12,7 +12,7 @@
 1. Edit `circle.yml` and specify your parameters. <br/>For more information refer to <b>Setup circle.ci integration</b> section.
 
 ## Installation
-1. Install node.js 6.x
+1. Install node.js 4.x/6.x
 1. Clone the repo and navigate to the project directory
 1. `npm install`
 1. Edit `src/config.js` and specify your params. For more information refer to <b>Setup config</b> section.
