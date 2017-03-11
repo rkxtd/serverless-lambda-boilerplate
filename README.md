@@ -1,6 +1,6 @@
 # serverless-workshop
 
-[![CircleCI](https://circleci.com/gh/xcomanche/serverless-workshop/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-workshop/tree/master)
+[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate)
 
 ## Prerequisites
 1. You should have AWS account activated.
