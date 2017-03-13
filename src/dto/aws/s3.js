@@ -2,17 +2,13 @@ import config from '../config';
 import Users from '../models/Users';
 import AWS from 'aws-sdk';
 const s3 = new AWS.S3();
-// AWS.config.setPromisesDependency(null);
 
-export default class UsersDTO {
+export default class UsersDTO extends DTO {
     constructor() {
         this.usersResource = {
             Bucket: config.aws.s3,
             Key: 'resources/users.json'
         };
-        this.UsersCollection = null;
-        this.isUsersLoaded = false;
-        this.usersLoadError = null;
     }
 
     getParams(additionalParams) {
