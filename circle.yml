@@ -17,7 +17,7 @@ test:
   override:
     - npm test
   post:
-    - npm run redeploy
+    - [ $CIRCLE_BRANCH = 'master' ] && npm run redeploy
 notify:
   webhooks:
     - url: https://hooks.slack.com/services/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
