@@ -1,6 +1,6 @@
 # serverless-lambda-boilerplate
 
-[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate)
+[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master)
 
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
 Out of the box you will get:
