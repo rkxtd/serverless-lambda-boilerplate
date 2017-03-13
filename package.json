@@ -40,6 +40,5 @@
     "serverless": "^1.8.0"
   },
   "dependencies": {
-    "uuid": "^3.0.0"
   }
 }
