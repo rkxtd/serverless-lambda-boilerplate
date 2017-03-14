@@ -12,9 +12,12 @@ dependencies:
     - npm install
   cache_directories:
     - "node_modules"
+general:
+  artifacts:
+    - "coverage/coverage.json"
 test:
   override:
-    - npm test
+    - npm run test-report
   post:
     - if [ $CIRCLE_BRANCH = 'master' ]; then npm run redeploy; fi
 notify:
