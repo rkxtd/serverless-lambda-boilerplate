@@ -6,7 +6,7 @@
 [![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master) 
 [![Coverage Status](https://coveralls.io/repos/github/xcomanche/serverless-lambda-boilerplate/badge.svg)](https://coveralls.io/github/xcomanche/serverless-lambda-boilerplate) 
 [![Dependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg)
-[![devDependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg#info=devDependencies)
+[![devDependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate/dev-status.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg#info=devDependencies)
 
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
 
