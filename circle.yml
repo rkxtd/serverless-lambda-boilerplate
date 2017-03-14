@@ -20,6 +20,3 @@ test:
     - npm run test-report
   post:
     - if [ $CIRCLE_BRANCH = 'master' ]; then npm run redeploy; fi
-notify:
-  webhooks:
-    - url: https://hooks.slack.com/services/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

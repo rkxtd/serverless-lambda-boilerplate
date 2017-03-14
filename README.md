@@ -57,7 +57,9 @@ TBD
 TBD
 
 ## Setup circle.ci integration
-TBD
+1. Activate your project in circleci
+1. Receive your AWS credentials and put it into CircleCI Project Settings/AWS Permissions
+1. Receive your coveralls token and put it into CircleCI Project Settings/Environment Variables create COVERALLS_REPO_TOKEN var
 
 ## Contribution
 This is free and opensource product. Just take and use it as you want to :)
