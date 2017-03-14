@@ -8,8 +8,6 @@ machine:
     CIRCLE_ENV: test
 dependencies:
   pre:
-    - touch .coveralls.yml
-    - echo "repo_token:$COVERALLS_TOKEN" > .coveralls.yml
   override:
     - npm install
   cache_directories:
