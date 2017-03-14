@@ -6,3 +6,4 @@ node_modules
 build/*
 apidoc.json
 npm-debug.log
+coverage
