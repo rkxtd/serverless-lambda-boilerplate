@@ -12,6 +12,9 @@ dependencies:
     - npm install
   cache_directories:
     - "node_modules"
+general:
+  artifacts:
+    - "coverage/coverage.json"
 test:
   override:
     - npm test
