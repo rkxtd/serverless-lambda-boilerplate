@@ -1,21 +1,19 @@
-import config from '../config';
-import Users from '../models/Users';
 import AWS from 'aws-sdk';
 const s3 = new AWS.S3();
 
-export default class UsersDTO extends DTO {
-    constructor() {
-        this.usersResource = {
-            Bucket: config.aws.s3,
-            Key: 'resources/users.json'
+export default class S3Driver {
+    constructor(params) {
+        this.resource = {
+            Bucket: params.bucket,
+            Key: params.path
         };
     }
 
     getParams(additionalParams) {
-        return Object.assign(this.usersResource, additionalParams);
+        return Object.assign(this.resource, additionalParams);
     }
 
-    fetchUsers(errCB, doneCB, id = null) {
+    fetchItems(errCB, doneCB, id = null) {
         let me = this;
         if (!this.isUsersLoaded) {
             s3.getObject(this.getParams(), (err, data) => {
@@ -43,11 +41,11 @@ export default class UsersDTO extends DTO {
         }
     }
 
-    fetchUser(id, errCB, doneCB) {
+    fetchItem(id, errCB, doneCB) {
         this.fetchUsers(errCB, doneCB, id);
     }
 
-    createUser(user, errCB, doneCB) {
+    create(user, errCB, doneCB) {
         this.fetchUsers(err => errCB(err), users => {
             user.id = Math.floor((Math.random() * 10000000) + 1);
             users.push(user);
@@ -64,7 +62,7 @@ export default class UsersDTO extends DTO {
         });
     }
 
-    updateUser(userToUpdate, errCB, doneCB) {
+    update(userToUpdate, errCB, doneCB) {
         let updatedUser = {};
         this.fetchUsers(err => errCB(err), users => {
             users.forEach((user, i)=> {
@@ -84,7 +82,7 @@ export default class UsersDTO extends DTO {
         });
     }
 
-    deleteUser(userIdToDelete, errCB, doneCB) {
+    delete(userIdToDelete, errCB, doneCB) {
         let deletedUser = {};
         this.fetchUsers(err => errCB(err), users => {
             users.forEach((user, i)=> {

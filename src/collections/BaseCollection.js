@@ -54,12 +54,24 @@ export default class Collection {
         return Object.assign(this.baseModel, this.model);
     }
 
-    fieldsToValues(fields) {
-        return [];
+    getValues(fields) {
+        const values = {};
+
+        Object.keys(fields).forEach((key) => {
+            values[key] = fields[key].value;
+        });
+
+        return values;
     }
 
-    valuesToFields(values) {
-        return {};
+    setFields(values) {
+        const fields = this.getDefaultFields();
+
+        Object.keys(values).forEach((key) => {
+            fields[key].value = values[key];
+        });
+
+        return fields;
     }
 
     validate(fields) {

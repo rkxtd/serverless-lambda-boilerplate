@@ -69,7 +69,7 @@ export default class Table {
         }
     }
 
-    dalate(record, errCB, doneCB) {
+    delete(record, errCB, doneCB) {
         try {
             doneCB(this.collection.delete(record));
         } catch (e) {

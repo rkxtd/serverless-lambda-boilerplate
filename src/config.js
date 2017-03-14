@@ -14,6 +14,7 @@ module.exports = {
     entities: {
         users: {
             dtoDriver: 'aws/s3',
+            bucket: 'itweek-workshop',
             path: 'users.json'
         }
     }
