@@ -3,10 +3,10 @@
 [![Serverless](https://files.readme.io/PxwIpAFoRCaTxnA20bxL_logo_readmeio_serverless.png)](https://serverless.com/)
 
 ### Project Status
-[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master) 
+[![CircleCI](https://img.shields.io/circleci/project/github/xcomanche/serverless-lambda-boilerplate/master.svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master) 
 [![Coverage Status](https://coveralls.io/repos/github/xcomanche/serverless-lambda-boilerplate/badge.svg)](https://coveralls.io/github/xcomanche/serverless-lambda-boilerplate) 
-[![Dependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate)
-[![devDependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate/dev-status.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate?type=dev)
+[![Dependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate)
+[![devDependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate/dev-status.svg)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate?type=dev)
 [![Github All Releases](https://img.shields.io/github/downloads/xcomanche/serverless-lambda-boilerplate/total.svg)](https://codeload.github.com/xcomanche/serverless-lambda-boilerplate/zip/master)
 
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
