@@ -12,10 +12,14 @@
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
 
 ### What you will get:
-1. Clear folder structure to put your code logically splitted to node.js modules.
-1. Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
-1. Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
-1. Automated API versioning based on NPM versioning (version of API correspond version in package.json)
+[x] Clear folder structure to put your code logically splitted to node.js modules.
+[x] Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
+[x] Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
+[x] Configured CI integration
+[x] All kinds of badges
+[ ] Automated API versioning based on NPM versioning (version of API correspond version in package.json)
+[ ] Local development environment with possibility to run lambda functions and navigate thought generated APIDOC
+[ ] Integration tests
 
 ## Prerequisites
 1. You should have AWS account activated.
