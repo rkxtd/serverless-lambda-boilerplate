@@ -1,7 +1,6 @@
-## Customize the test machine
 machine:
   timezone:
-    Europe/Kiev # Set the timezone
+    Europe/Kiev
   node:
     version:
       6.10.0
