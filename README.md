@@ -7,7 +7,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/xcomanche/serverless-lambda-boilerplate/badge.svg)](https://coveralls.io/github/xcomanche/serverless-lambda-boilerplate) 
 
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
-Out of the box you will get:
+
+### What you will get:
 1. Clear folder structure to put your code logically splitted to node.js modules.
 1. Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
 1. Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
