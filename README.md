@@ -1,6 +1,6 @@
 # serverless-lambda-boilerplate
 
-[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master)
+[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master) [![Serverless](https://files.readme.io/PxwIpAFoRCaTxnA20bxL_logo_readmeio_serverless.png)](https://serverless.com/)
 
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
 Out of the box you will get:
@@ -35,6 +35,8 @@ Out of the box you will get:
 1. `deploy:doc` - Deploy <b>API Doc</b> from <b>doc/</b> folder into <b>AWS S3</b> bucket
 1. `redeploy` - Runs sequentially `npm run clean` than `build:app` than `deploy:app` than `build:doc` than `deploy:doc`
 
+## Serverless commands
+Follow the documentation on [Serverless project](https://serverless.com/) 
 ## Setup config
 TBD
 
