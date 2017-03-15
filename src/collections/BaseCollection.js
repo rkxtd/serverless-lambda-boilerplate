@@ -37,18 +37,16 @@ export default class Collection {
     }
 
     create(fields) {
-        const record = Object.assign({}, this.getDefaultFields(), fields);
+        const record = Object.assign({}, this.getValues(this.getDefaultFields()), fields);
 
         return this.dtoDriver
             .create(record)
-            .then(() => this.sync())
             .then(() => {
                 return {
                     status: 'collection.CREATE_SUCCESS',
                     record
                 }
-            })
-            .catch(error => {
+            }, error => {
                 return {
                     status: 'collection.CREATE_ERROR',
                     record,
@@ -66,7 +64,6 @@ export default class Collection {
 
         return this.dtoDriver
             .update(record)
-            .then(() => this.sync())
             .then(() => {
                 return {
                     status: 'collection.UPDATE_SUCCESS',
@@ -114,7 +111,7 @@ export default class Collection {
         const values = {};
 
         Object.keys(fields).forEach((key) => {
-            values[key] = fields[key].value;
+            values[key] = fields[key].value || fields[key].default;
         });
 
         return values;

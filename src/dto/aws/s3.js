@@ -18,27 +18,32 @@ export default class S3Driver {
         return s3.getObject(this.getParams())
             .promise()
             .then(data => {
+                console.log(data);
                 return JSON.parse(data.Body.toString('utf8'))
             })
             .catch(err => {
+                console.log('Error while listing', err);
                 throw new Error(err);
             });
     }
 
-    save(users) {
-        return s3.upload(this.getParams({ Body: JSON.stringify(users) })).promise();
+    save(items) {
+        console.log('Trying to save: ', this.getParams({ Body: JSON.stringify(items) }));
+        return s3.upload(this.getParams({ Body: JSON.stringify(items) })).promise();
     }
 
     create(item) {
-        this.list()
+        return this.list()
             .then(items => {
                 items.push(item);
                 return this.save(items)
+            }, error => {
+                throw new Error('Failed to receive. Error: ', error)
             });
     }
 
     update(itemToUpdate) {
-        this.list()
+        return this.list()
             .then(items => {
 
                 items.forEach((item, i) => {
@@ -52,7 +57,7 @@ export default class S3Driver {
     }
 
     delete(itemToDelete) {
-        this.list()
+        return this.list()
             .then(items => {
 
                 items.forEach((item, i) => {
