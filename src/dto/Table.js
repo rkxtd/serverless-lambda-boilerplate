@@ -37,43 +37,31 @@ export default class Table {
         this.collection.sync();
     }
 
-    fetch(errCB, doneCB, filters) {
-        try {
-            doneCB(this.collection.findAll(filters));
-        } catch (e) {
-            errCB(e.message);
-        }
+    list(filters) {
+        return this.collection
+            .sync()
+            .then(() => {
+                return this.collection.findAll(filters)
+            });
     }
 
-    fetchOne(errCB, doneCB, filters) {
-        try {
-            doneCB(this.collection.findOne(filters));
-        } catch (e) {
-            errCB(e.message);
-        }
+    get(id) {
+        return this.collection
+            .sync()
+            .then(() => {
+                return this.collection.findOne(id)
+            });
     }
 
-    create(record, errCB, doneCB) {
-        try {
-            doneCB(this.collection.create(record));
-        } catch (e) {
-            errCB(e.message);
-        }
+    create(record) {
+        return this.collection.create(record);
     }
 
-    update(record, updateParams, errCB, doneCB) {
-        try {
-            doneCB(this.collection.update(record, updateParams));
-        } catch (e) {
-            errCB(e.message);
-        }
+    update(record, updateParams) {
+        return this.collection.update(record, updateParams);
     }
 
-    delete(record, errCB, doneCB) {
-        try {
-            doneCB(this.collection.delete(record));
-        } catch (e) {
-            errCB(e.message);
-        }
+    delete(record) {
+        return this.collection.delete(record);
     }
 }

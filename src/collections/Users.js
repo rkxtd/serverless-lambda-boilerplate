@@ -1,8 +1,8 @@
 import BaseCollection from './BaseCollection';
 
 export default class Users extends BaseCollection {
-    constructor() {
-        super(arguments);
+    constructor(driver) {
+        super(driver);
         this.model = {
             firstName: {
                 required: true,

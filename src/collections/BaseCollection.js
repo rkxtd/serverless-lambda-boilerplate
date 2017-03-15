@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import l10n from '../l10n/en.js';
 
 export default class Collection {
     constructor(driver) {
@@ -28,7 +29,7 @@ export default class Collection {
     }
 
     findAll(filterFn) {
-        return (filterFn) ? this.items : this.items.filter(filterFn);
+        return (filterFn) ? this.items.filter(filterFn) : this.items;
     }
 
     findOne(id) {
@@ -38,16 +39,71 @@ export default class Collection {
     create(fields) {
         const record = Object.assign({}, this.getDefaultFields(), fields);
 
-        this.dtoDriver.create(record);
-        this.sync();
+        return this.dtoDriver
+            .create(record)
+            .then(() => this.sync())
+            .then(() => {
+                return {
+                    status: 'collection.CREATE_SUCCESS',
+                    record
+                }
+            })
+            .catch(error => {
+                return {
+                    status: 'collection.CREATE_ERROR',
+                    record,
+                    error
+                }
+            });
     }
 
-    update(id, fields) {
-        const oldRecord = this.dtoDriver.fetchOne(id);
-        const record = Object.assign({}, this.getDefaultFields(), oldRecord,  fields);
+    update(id, newFields) {
+        const record = Object.assign({}, this.getDefaultFields(), this.findOne(id), newFields);
 
-        this.dtoDriver.update(record);
-        this.sync();
+        if (newFields.id && newFields.id !== id) {
+            throw new Error('collection.RECORD_UPDATE_CANNOT_ID');
+        }
+
+        return this.dtoDriver
+            .update(record)
+            .then(() => this.sync())
+            .then(() => {
+                return {
+                    status: 'collection.UPDATE_SUCCESS',
+                    record
+                }
+            })
+            .catch(error => {
+                return {
+                    status: 'collection.UPDATE_ERROR',
+                    record,
+                    error
+                }
+            });
+    }
+
+    delete(id) {
+        if (!id) {
+            throw new Error('ID should be present');
+        }
+        const record = this.findOne(id);
+
+        return this.dtoDriver
+            .delete(record)
+            .then(() => this.sync())
+            .then(() => {
+                return {
+                    status: 'collection.DELETE_SUCCESS',
+                    record
+                }
+            })
+            .catch(error => {
+                return {
+                    status: 'collection.DELETE_ERROR',
+                    record,
+                    error
+                }
+            });
     }
 
     getDefaultFields() {
@@ -82,6 +138,14 @@ export default class Collection {
     }
 
     sync() {
-        this.items = this.dtoDriver.fetchAll(this.filters);
+        return this.dtoDriver
+            .list()
+            .then(items => {
+                this.items = items;
+                return this.items;
+            })
+            .catch((err) => {
+                throw new Error(l10n.t('collection.SYNC_ERROR', err));
+            });
     }
 }

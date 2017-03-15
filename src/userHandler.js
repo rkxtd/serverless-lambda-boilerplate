@@ -1,7 +1,7 @@
 'use strict';
-import UsersDTO from './dto/Users';
+import Table from './dto/Table';
 import ResponseHelper from './helpers/Response';
-const UsersDataSource = new UsersDTO();
+const UsersDTO = new Table('aws/s3', 'users');
 
 /**
  * @api {get} /users/ GetAll
@@ -15,19 +15,19 @@ const UsersDataSource = new UsersDTO();
  * @apiError {String} error Error Message
  */
 module.exports.users = (event, context, callback) => {
-    UsersDataSource.fetchUsers(
-        err => {
-            callback(null, ResponseHelper.generateErrorResponse(err));
-            context.done();
-        },
-        users => {
+    UsersDTO
+        .list()
+        .then((users) => {
             callback(null, ResponseHelper.generateSuccessResponse({
                 results: users,
                 total: users.length
             }));
             context.done();
-        }
-    );
+        })
+        .catch((err) => {
+            callback(null, ResponseHelper.generateErrorResponse(err.toString()));
+            context.done();
+        });
 };
 
 /**
@@ -55,25 +55,18 @@ module.exports.user = (event, context, callback) => {
         }));
         context.done();
     } else {
-        UsersDataSource.fetchUser(
-            userId,
-            err => {
-                callback(null, ResponseHelper.generateErrorResponse(err));
+        UsersDTO
+            .get(userId)
+            .then((user) => {
+                callback(null, ResponseHelper.generateSuccessResponse({
+                    results: user
+                }));
                 context.done();
-            },
-            user => {
-                if (user) {
-                    callback(null, ResponseHelper.generateSuccessResponse(user));
-                } else {
-                    callback(null, ResponseHelper.generateErrorResponse({
-                        error: 'User Not Found',
-                        input: event,
-                        statusCode: 404
-                    }));
-                }
+            })
+            .catch((err) => {
+                callback(null, ResponseHelper.generateErrorResponse(err.toString()));
                 context.done();
-            }
-        );
+            });
     }
 
 
@@ -100,6 +93,7 @@ module.exports.user = (event, context, callback) => {
  */
 module.exports.create = (event, context, callback) => {
     const queryParams = event.queryStringParameters || event;
+
     if (!queryParams || !queryParams.firstName || !queryParams.lastName) {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'firstName and lastName are required',
@@ -116,20 +110,17 @@ module.exports.create = (event, context, callback) => {
         age: parseInt(queryParams.age) || 0
     };
 
-    UsersDataSource.createUser(
-        newUser,
-        err => {
+    UsersDTO.create(newUser)
+        .then(results => {
+            callback(null, ResponseHelper.generateSuccessResponse({ results }));
+            context.done();
+        })
+        .catch(err => {
             callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while updating user',
+                error: 'Error while creating user',
                 input: event,
                 context: err,
                 statusCode: err.statusCode
-            }));
-            context.done();
-        },
-        user => {
-            callback(null, ResponseHelper.generateSuccessResponse({
-                results: user
             }));
             context.done();
         }
@@ -185,24 +176,21 @@ module.exports.update = (event, context, callback) => {
         userToUpdate.age = parseInt(queryParams.age);
     }
 
-    UsersDataSource.updateUser(
-        userToUpdate,
-        err => {
-            callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while creating user',
-                input: event,
-                context: err,
-                statusCode: err.statusCode
-            }));
+    UsersDTO.update(id, userToUpdate)
+        .then(results => {
+            callback(null, ResponseHelper.generateSuccessResponse({ results }));
             context.done();
-        },
-        updatedUser => {
-            callback(null, ResponseHelper.generateSuccessResponse({
-                results: updatedUser
-            }));
-            context.done();
-        }
-    );
+        })
+        .catch(err => {
+                callback(null, ResponseHelper.generateErrorResponse({
+                    error: 'Error while updating user',
+                    input: event,
+                    context: err,
+                    statusCode: err.statusCode
+                }));
+                context.done();
+            }
+        );
 };
 
 /**
@@ -237,22 +225,19 @@ module.exports.delete = (event, context, callback) => {
 
     const userIdToDelete = parseInt(queryParams.id);
 
-    UsersDataSource.deleteUser(
-        userIdToDelete,
-        err => {
-            callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while deleting user',
-                input: event,
-                context: err,
-                statusCode: err.statusCode
-            }));
+    UsersDTO.delete(userIdToDelete)
+        .then(results => {
+            callback(null, ResponseHelper.generateSuccessResponse({ results }));
             context.done();
-        },
-        deletedUser => {
-            callback(null, ResponseHelper.generateSuccessResponse({
-                results: deletedUser
-            }));
-            context.done();
-        }
-    );
+        })
+        .catch(err => {
+                callback(null, ResponseHelper.generateErrorResponse({
+                    error: 'Error while deleting user',
+                    input: event,
+                    context: err,
+                    statusCode: err.statusCode
+                }));
+                context.done();
+            }
+        );
 };
