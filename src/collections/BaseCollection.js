@@ -67,8 +67,10 @@ export default class Collection {
         return this.dtoDriver
             .list()
             .then(items => {
+                const existedRecord = this.findOne(id);
+                delete(existedRecord.modified);
                 this.items = items;
-                return Object.assign(record, this.getValues(this.getDefaultFields()), this.findOne(id), newFields);
+                return Object.assign(record, this.getValues(this.getDefaultFields()), existedRecord, newFields);
             })
             .then(record => this.dtoDriver.update(record))
             .then(() => {
