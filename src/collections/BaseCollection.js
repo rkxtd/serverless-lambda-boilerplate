@@ -6,25 +6,29 @@ export default class Collection {
         this.filters = {};
         this.items = [];
         this.dtoDriver = driver;
-        this.baseModel = {
-            id: {
-                required: true,
-                type: 'uuid',
-                default: uuid()
-            },
-            created: {
-                required: true,
-                type: 'timestamp',
-                default: new Date().getTime()
-            },
-            modified: {
-                required: true,
-                type: 'timestamp',
-                default: new Date().getTime()
+        this.baseModel = () => {
+            return {
+                id: {
+                    required: true,
+                    type: 'uuid',
+                    default: uuid()
+                },
+                created: {
+                    required: true,
+                    type: 'timestamp',
+                    default: new Date().getTime()
+                },
+                modified: {
+                    required: true,
+                    type: 'timestamp',
+                    default: new Date().getTime()
+                }
             }
         };
 
-        this.model = {};
+        this.model = () => {
+            return {};
+        };
 
     }
 
@@ -33,7 +37,7 @@ export default class Collection {
     }
 
     findOne(id) {
-        return this.items.filter(item => item.id === id)[0];
+        return this.items.filter(item => item.id == id)[0];
     }
 
     create(fields) {
@@ -56,14 +60,17 @@ export default class Collection {
     }
 
     update(id, newFields) {
-        const record = Object.assign({}, this.getDefaultFields(), this.findOne(id), newFields);
-
-        if (newFields.id && newFields.id !== id) {
+        if (newFields.id && newFields.id != id) {
             throw new Error('collection.RECORD_UPDATE_CANNOT_ID');
         }
-
+        let record = {};
         return this.dtoDriver
-            .update(record)
+            .list()
+            .then(items => {
+                this.items = items;
+                return Object.assign(record, this.getValues(this.getDefaultFields()), this.findOne(id), newFields);
+            })
+            .then(record => this.dtoDriver.update(record))
             .then(() => {
                 return {
                     status: 'collection.UPDATE_SUCCESS',
@@ -83,28 +90,26 @@ export default class Collection {
         if (!id) {
             throw new Error('ID should be present');
         }
-        const record = this.findOne(id);
 
         return this.dtoDriver
-            .delete(record)
-            .then(() => this.sync())
+            .delete({id})
             .then(() => {
                 return {
                     status: 'collection.DELETE_SUCCESS',
-                    record
+                    id: {id}
                 }
             })
             .catch(error => {
                 return {
                     status: 'collection.DELETE_ERROR',
-                    record,
-                    error
+                    id: {id},
+                    error: error.message
                 }
             });
     }
 
     getDefaultFields() {
-        return Object.assign(this.baseModel, this.model);
+        return Object.assign(this.baseModel(), this.model());
     }
 
     getValues(fields) {

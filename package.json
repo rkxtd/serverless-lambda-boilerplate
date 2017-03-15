@@ -45,6 +45,7 @@
     "serverless": "^1.8.0"
   },
   "dependencies": {
+    "querystring": "^0.2.0",
     "uuid": "3.0.0"
   }
 }

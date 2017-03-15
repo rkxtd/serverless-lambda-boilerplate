@@ -11,24 +11,22 @@ export default class S3Driver {
     }
 
     getParams(additionalParams) {
-        return Object.assign(this.resource, additionalParams);
+        return Object.assign({}, this.resource, additionalParams);
     }
 
     list() {
-        return s3.getObject(this.getParams())
+        const params = this.getParams();
+        return s3.getObject(params)
             .promise()
             .then(data => {
-                console.log(data);
                 return JSON.parse(data.Body.toString('utf8'))
             })
             .catch(err => {
-                console.log('Error while listing', err);
-                throw new Error(err);
+                throw new Error(err.message);
             });
     }
 
     save(items) {
-        console.log('Trying to save: ', this.getParams({ Body: JSON.stringify(items) }));
         return s3.upload(this.getParams({ Body: JSON.stringify(items) })).promise();
     }
 
@@ -38,7 +36,7 @@ export default class S3Driver {
                 items.push(item);
                 return this.save(items)
             }, error => {
-                throw new Error('Failed to receive. Error: ', error)
+                throw new Error('Failed to receive. Error: ', error.message)
             });
     }
 
@@ -61,7 +59,7 @@ export default class S3Driver {
             .then(items => {
 
                 items.forEach((item, i) => {
-                    if (item.id === itemToDelete.id) {
+                    if (item.id == itemToDelete.id) {
                         items.splice(i, 1);
                     }
                 });
