@@ -7,7 +7,7 @@ import UsersCollection from '../collections/Users';
 export default class Table {
     constructor(driverName, collectionName) {
         if (!driverName || typeof driverName !== 'string') throw new Error('dto.DRIVER_NOT_DEFINED');
-        if (!collectionName || typeof driverName !== 'string') throw new Error('dto.COLLECTION_NOT_DEFINED');
+        if (!collectionName || typeof collectionName !== 'string') throw new Error('dto.COLLECTION_NOT_DEFINED');
 
         driverName = driverName.toLowerCase();
         collectionName = collectionName.toLowerCase();

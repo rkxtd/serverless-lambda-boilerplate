@@ -18,7 +18,7 @@ general:
     - "coverage/coverage.json"
 test:
   override:
-    # - npm run test-report
+    - npm run test-report
   post:
     #- if [ $CIRCLE_BRANCH = 'master' ]; then npm run redeploy; fi
     - npm run redeploy
