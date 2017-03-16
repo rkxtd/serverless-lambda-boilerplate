@@ -1,8 +1,7 @@
 module.exports = {
     aws: {
         region: 'eu-west-1', // AWS Region
-        s3: 'itweek-workshop', // S3 Bucket name for Lambda resources
-        url: 'https://1dn9ql7rul.execute-api.eu-west-1.amazonaws.com/dev' // URL to Lambda endpoint
+        url: 'https://gnrsdm5uqh.execute-api.eu-west-1.amazonaws.com/feature1' // URL to Lambda endpoint
     },
     apidoc: {
         name: "serverless-lambda-boilerplate",

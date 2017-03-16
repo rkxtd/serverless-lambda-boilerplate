@@ -17,7 +17,7 @@
     "deploy:app": "(cd build && ../node_modules/.bin/serverless deploy)",
     "build:doc": "node ./scripts/generateApidocConfig.js && ./node_modules/.bin/apidoc -i src -o doc",
     "deploy:doc": "node ./scripts/deployToS3.js",
-    "copy:configs": "cp src/config.js build/ && cp package.json build/ && sed \"s@%branch%@${CIRCLE_BRANCH}@\" src/serverless.yml > build/serverless.yml",
+    "copy:configs": "cp src/config.js build/ && cp package.json build/ && sed \"s@%branch%@${BRANCH}@\" src/serverless.yml > build/serverless.yml",
     "redeploy": "npm run clean && npm run copy:configs && npm run install:prod && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
   },
   "author": "Roman Shuvaryk <xcomanche@gmail.com>",

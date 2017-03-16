@@ -1,5 +1,4 @@
 import uuid from 'uuid';
-import l10n from '../l10n/en.js';
 
 export default class Collection {
     constructor(driver) {
@@ -61,7 +60,7 @@ export default class Collection {
 
     update(id, newFields) {
         if (newFields.id && newFields.id != id) {
-            throw new Error('collection.RECORD_UPDATE_CANNOT_ID');
+            throw new Error('collection.UPDATE_ERROR-ID_CHANGE_FORBIDDEN');
         }
         let record = {};
         return this.dtoDriver
@@ -90,7 +89,7 @@ export default class Collection {
 
     delete(id) {
         if (!id) {
-            throw new Error('ID should be present');
+            throw new Error('collection.DELETE_ERROR-ID_REQUIRED');
         }
 
         return this.dtoDriver
@@ -134,13 +133,6 @@ export default class Collection {
         return fields;
     }
 
-    validate(fields) {
-        return true || {
-            field1: 'error1',
-            field2: 'error2'
-        };
-    }
-
     sync() {
         return this.dtoDriver
             .list()
@@ -149,7 +141,7 @@ export default class Collection {
                 return this.items;
             })
             .catch((err) => {
-                throw new Error(l10n.t('collection.SYNC_ERROR', err));
+                throw new Error(err);
             });
     }
 }

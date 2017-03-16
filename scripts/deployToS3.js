@@ -15,7 +15,7 @@ var params = {
 
     s3Params: {
         Bucket: config.apidoc.s3,
-        Prefix: "",
+        Prefix: process.env.BRANCH
     },
 };
 
@@ -33,5 +33,5 @@ uploader.on('progress', function() {
     }
 });
 uploader.on('end', function() {
-    console.log("New APIDOC deployed. Visit: ", config.apidoc.url);
+    console.log("New APIDOC deployed. Visit: ", config.apidoc.url + '/' + process.env.BRANCH);
 });
