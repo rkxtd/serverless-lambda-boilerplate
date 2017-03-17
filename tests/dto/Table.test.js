@@ -63,12 +63,12 @@ describe( 'dto/Table constructor', function() {
         done();
     });
 
-    // it('Check dynamodb driver loading success', done => {
-    //     const table = new Table('aws/dynamodb', 'users');
-    //     expect(table.driver.loaded).to.eq('dynamodb');
-    //
-    //     done();
-    // });
+    it('Check dynamodb driver loading success', done => {
+        const table = new Table('aws/dynamodb', 'users');
+        expect(table.driver.loaded).to.eq('dynamodb');
+
+        done();
+    });
 
     it('Check collection loading success', done => {
         const table = new Table('aws/s3', 'users');

@@ -2,6 +2,10 @@ import uuid from 'uuid';
 
 export default class Collection {
     constructor(driver) {
+        if (typeof driver !== 'object') {
+            throw new Error('collection.DRIVER_NOT_DEFINED');
+        }
+
         this.filters = {};
         this.items = [];
         this.dtoDriver = driver;
@@ -32,11 +36,17 @@ export default class Collection {
     }
 
     findAll(filterFn) {
+        if (typeof filterFn !== 'function') {
+            throw new Error('collection.FILTER_FUNCTION_REQUIRED');
+        }
         return (filterFn) ? this.items.filter(filterFn) : this.items;
     }
 
     findOne(id) {
-        return this.items.filter(item => item.id == id)[0];
+        if (typeof id !== 'string' && typeof id !== 'number') {
+            throw new Error('collection.UUID_REQUIRED');
+        }
+        return this.items.filter(item => item.id == id)[0] || null;
     }
 
     create(fields) {
