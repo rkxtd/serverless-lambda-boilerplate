@@ -19,4 +19,4 @@ test:
   override:
     - npm run test-report
   post:
-    - npm run redeploy
+    - BRANCH=$CIRCLE_BRANCH npm run redeploy

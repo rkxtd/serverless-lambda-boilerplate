@@ -10,6 +10,11 @@ module.exports = {
         s3: 'itweek-workshop-doc', // S3 Bucket name for APIDOC
         url: 'http://itweek-workshop-doc.s3-website-eu-west-1.amazonaws.com' // URL for APIDOC website
     },
+    branches: {
+        prod: /^master$/,
+        stage: /^release\/[0-9]+.[0-9]+.[0-9]+$/,
+        dev: /^develop$/
+    },
     entities: {
         users: {
             dtoDriver: 'aws/s3',
