@@ -3,19 +3,23 @@
 [![Serverless](https://files.readme.io/PxwIpAFoRCaTxnA20bxL_logo_readmeio_serverless.png)](https://serverless.com/)
 
 ### Project Status
-[![CircleCI](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master) 
+[![CircleCI](https://img.shields.io/circleci/project/github/xcomanche/serverless-lambda-boilerplate/master.svg)](https://circleci.com/gh/xcomanche/serverless-lambda-boilerplate/tree/master) 
 [![Coverage Status](https://coveralls.io/repos/github/xcomanche/serverless-lambda-boilerplate/badge.svg)](https://coveralls.io/github/xcomanche/serverless-lambda-boilerplate) 
-[![Dependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg)
-[![devDependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate/dev-status.svg?style=flat-square)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg#info=devDependencies)
+[![Dependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate.svg)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate)
+[![devDependency Status](https://david-dm.org/xcomanche/serverless-lambda-boilerplate/dev-status.svg)](https://david-dm.org/xcomanche/serverless-lambda-boilerplate?type=dev)
 [![Github All Releases](https://img.shields.io/github/downloads/xcomanche/serverless-lambda-boilerplate/total.svg)](https://codeload.github.com/xcomanche/serverless-lambda-boilerplate/zip/master)
 
 The main goal of this Project is to have structured approach to develop, test, build, deploy and document serverless micro-services. Based on AWS Lambda, and serverless micro-framework.
 
 ### What you will get:
-1. Clear folder structure to put your code logically splitted to node.js modules.
-1. Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
-1. Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
-1. Automated API versioning based on NPM versioning (version of API correspond version in package.json)
+- [x] Clear folder structure to put your code logically splitted to node.js modules.
+- [x] Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
+- [x] Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
+- [x] Configured CI integration
+- [x] All kinds of badges
+- [ ] Automated API versioning based on NPM versioning (version of API correspond version in package.json)
+- [ ] Local development environment with possibility to run lambda functions and navigate thought generated APIDOC
+- [ ] Integration tests
 
 ## Prerequisites
 1. You should have AWS account activated.
@@ -45,6 +49,7 @@ The main goal of this Project is to have structured approach to develop, test, b
 
 ## Serverless commands
 Follow the documentation on [Serverless project](https://serverless.com/) 
+
 ## Setup config
 TBD
 
@@ -52,7 +57,9 @@ TBD
 TBD
 
 ## Setup circle.ci integration
-TBD
+1. Activate your project in circleci
+1. Receive your AWS credentials and put it into CircleCI Project Settings/AWS Permissions
+1. Receive your coveralls token and put it into CircleCI Project Settings/Environment Variables create COVERALLS_REPO_TOKEN var
 
 ## Contribution
 This is free and opensource product. Just take and use it as you want to :)
