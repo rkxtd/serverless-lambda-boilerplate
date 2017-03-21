@@ -24,18 +24,19 @@ The main goal of this Project is to have structured approach to develop, test, b
 ## Prerequisites
 1. You should have AWS account activated.
 1. Create 2 s3 buckets. One of those buckets should be a static website hosting. <br/>For more information refer to <b>Setup s3 buckets</b> section.
-1. Create AWS user. <br/>For more information refer to <b>Create AWS User</b> section.
+1. Create AWS user. <br/>For more information refer to [Serverless Documentation](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
 1. Copy AWS user credentials into your `~/.bash_profile` <br/>
 `export AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY`<br/>
 `export AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_KEY`
-1. Edit `circle.yml` and specify your parameters. <br/>For more information refer to <b>Setup circle.ci integration</b> section.
 
 ## Installation
 1. [Install node.js 4.x/6.x](https://nodejs.org/en/download/) 
 1. `git clone git@github.com:xcomanche/serverless-lambda-boilerplate.git`
 1. `cd serverless-lambda-boilerplate`
 1. `npm install`
-1. Edit `src/config.js` and specify your params. For more information refer to <b>Setup config</b> section.
+1. Edit `src/config.js` and specify your params. <br/>For more information refer to <b>Setup config</b> section.
+1. Edit `circle.yml` and specify your parameters. <br/>For more information refer to <b>Setup circle.ci integration</b> section.
+1. Edit `src/serverless.yml` and specify your params. <br/>For more information refer to [Serverless Documentation](https://serverless.com/framework/docs/providers/aws/guide/services/)
 1. To test demo version of the app hit `npm run redeploy`
 
 ## NPM Commands
