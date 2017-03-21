@@ -70,7 +70,7 @@ export default class Collection {
 
     update(id, newFields) {
         if (newFields.id && newFields.id != id) {
-            throw new Error('collection.UPDATE_ERROR-ID_CHANGE_FORBIDDEN');
+            throw new Error('collection.UPDATE_ERROR:ID_CHANGE_FORBIDDEN');
         }
         let record = {};
         return this.dtoDriver
@@ -99,7 +99,7 @@ export default class Collection {
 
     delete(id) {
         if (!id) {
-            throw new Error('collection.DELETE_ERROR-ID_REQUIRED');
+            throw new Error('collection.DELETE_ERROR:ID_REQUIRED');
         }
 
         return this.dtoDriver
