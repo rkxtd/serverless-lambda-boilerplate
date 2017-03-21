@@ -33,7 +33,7 @@ describe( 'collections/BaseCollection constructor', function() {
     });
 });
 
-describe( 'collections/BaseCollection findOne', function() {
+describe( 'collections/BaseCollection findAll', function() {
     const collection = new BaseCollection(new MockDriver());
     collection.items = [{id: 1, b: 2}, {id: 2, b: 2, c: 3}, {id: 3, b: 2, d: 4}];
 
@@ -92,5 +92,45 @@ describe( 'collections/BaseCollection findOne', function() {
             done();
         }
 
+    });
+});
+
+describe( 'collections/BaseCollection create', function() {
+    it('should create new item', done => {
+        const collection = new BaseCollection(Object.assign({}, new MockDriver(), {
+            create: (record) => {
+                record.id = 'NEW_ID';
+
+                return Promise.resolve(record);
+            }
+        }));
+
+        collection.create({c: 3})
+            .then(response => {
+                expect(response.status).to.be.eq('collection.CREATE_SUCCESS');
+                expect(response.record.id).to.be.eq('NEW_ID');
+                expect(response.record.c).to.be.eq(3);
+
+                done();
+            });
+    });
+
+    it('should catch error while creating new item', done => {
+        const collection = new BaseCollection(Object.assign({}, new MockDriver(), {
+            create: (record) => {
+                record.id = 'NEW_ID';
+
+                return Promise.reject('AWS_ERROR');
+            }
+        }));
+
+        collection.create({c: 3})
+            .then(err => {
+                expect(err.status).to.be.eq('collection.CREATE_ERROR');
+                expect(err.record.c).to.be.eq(3);
+                expect(err.error).to.be.eq('AWS_ERROR');
+
+                done();
+            });
     });
 });
