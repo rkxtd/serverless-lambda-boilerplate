@@ -1,7 +1,9 @@
 'use strict';
-import UsersDTO from './dto/Users';
+import Table from './dto/Table';
 import ResponseHelper from './helpers/Response';
-const UsersDataSource = new UsersDTO();
+import querystring from 'querystring';
+
+const UsersDTO = new Table('aws/s3', 'users');
 
 /**
  * @api {get} /users/ GetAll
@@ -15,19 +17,19 @@ const UsersDataSource = new UsersDTO();
  * @apiError {String} error Error Message
  */
 module.exports.users = (event, context, callback) => {
-    UsersDataSource.fetchUsers(
-        err => {
-            callback(null, ResponseHelper.generateErrorResponse(err));
-            context.done();
-        },
-        users => {
+    UsersDTO
+        .list()
+        .then((users) => {
             callback(null, ResponseHelper.generateSuccessResponse({
                 results: users,
                 total: users.length
             }));
             context.done();
-        }
-    );
+        })
+        .catch((err) => {
+            callback(null, ResponseHelper.generateErrorResponse(err.toString()));
+            context.done();
+        });
 };
 
 /**
@@ -36,16 +38,15 @@ module.exports.users = (event, context, callback) => {
  * @apiName UserGet
  * @apiGroup User
  *
- * @apiParam {Number} id Users unique ID.
+ * @apiParam {string} id User's unique ID.
  *
- * @apiSuccess {Number} id List of the user objects
+ * @apiSuccess {string} id uuid of the user
  * @apiSuccess {String} firstName First Name of the user
  * @apiSuccess {String} lastName Last Name of the user
  * @apiSuccess {Number} age Age of the user
  */
 module.exports.user = (event, context, callback) => {
-
-    const userId = parseInt(event.queryStringParameters.id);
+    const userId = event.queryStringParameters.id;
 
     if (!userId) {
         callback(null, ResponseHelper.generateErrorResponse({
@@ -55,25 +56,18 @@ module.exports.user = (event, context, callback) => {
         }));
         context.done();
     } else {
-        UsersDataSource.fetchUser(
-            userId,
-            err => {
-                callback(null, ResponseHelper.generateErrorResponse(err));
+        UsersDTO
+            .get(userId)
+            .then((user) => {
+                callback(null, ResponseHelper.generateSuccessResponse({
+                    results: user
+                }));
                 context.done();
-            },
-            user => {
-                if (user) {
-                    callback(null, ResponseHelper.generateSuccessResponse(user));
-                } else {
-                    callback(null, ResponseHelper.generateErrorResponse({
-                        error: 'User Not Found',
-                        input: event,
-                        statusCode: 404
-                    }));
-                }
+            })
+            .catch((err) => {
+                callback(null, ResponseHelper.generateErrorResponse(err.toString()));
                 context.done();
-            }
-        );
+            });
     }
 
 
@@ -91,7 +85,7 @@ module.exports.user = (event, context, callback) => {
  * @apiParam {String} lastName User Last Name.
  * @apiParam {Number} [age] Age of the user
  *
- * @apiSuccess {Number} id  Just created user id.
+ * @apiSuccess {String} id  Just created user id.
  * @apiSuccess {String} firstName User First Name.
  * @apiSuccess {String} lastName User Last Name.
  * @apiSuccess {Number} age Age of the user
@@ -99,8 +93,9 @@ module.exports.user = (event, context, callback) => {
  * @apiError {String} error Error Message.
  */
 module.exports.create = (event, context, callback) => {
-    const queryParams = event.queryStringParameters || event;
-    if (!queryParams || !queryParams.firstName || !queryParams.lastName) {
+    const params = querystring.decode(event.body);
+
+    if (!params || !params.firstName || !params.lastName) {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'firstName and lastName are required',
             input: event,
@@ -111,25 +106,22 @@ module.exports.create = (event, context, callback) => {
     }
 
     const newUser = {
-        firstName: queryParams.firstName,
-        lastName: queryParams.lastName,
-        age: parseInt(queryParams.age) || 0
+        firstName: params.firstName,
+        lastName: params.lastName,
+        age: parseInt(params.age) || 0
     };
 
-    UsersDataSource.createUser(
-        newUser,
-        err => {
+    UsersDTO.create(newUser)
+        .then(results => {
+            callback(null, ResponseHelper.generateSuccessResponse({ results }));
+            context.done();
+        })
+        .catch(err => {
             callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while updating user',
+                error: 'Error while creating user',
                 input: event,
                 context: err,
                 statusCode: err.statusCode
-            }));
-            context.done();
-        },
-        user => {
-            callback(null, ResponseHelper.generateSuccessResponse({
-                results: user
             }));
             context.done();
         }
@@ -143,12 +135,12 @@ module.exports.create = (event, context, callback) => {
  *
  * @apiVersion 0.1.0
  *
- * @apiParam {Number} id Existing user unique ID.
+ * @apiParam {String} id Existing user unique ID.
  * @apiParam {String} [firstName] User First Name.
  * @apiParam {String} [lastName] User Last Name.
  * @apiParam {String} [age] Age of the user
  *
- * @apiSuccess {Number} id  User Id.
+ * @apiSuccess {String} id  User Id.
  * @apiSuccess {String} firstName User First Name.
  * @apiSuccess {String} lastName User Last Name.
  * @apiSuccess {Number} age Age of the user
@@ -158,6 +150,8 @@ module.exports.create = (event, context, callback) => {
  */
 module.exports.update = (event, context, callback) => {
     const queryParams = event.queryStringParameters || event;
+    const params = querystring.decode(event.body);
+
     if (!queryParams || !queryParams.id) {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'User ID is required',
@@ -170,39 +164,36 @@ module.exports.update = (event, context, callback) => {
     }
 
     const userToUpdate = {
-        id: parseInt(queryParams.id)
+        id: queryParams.id
     };
 
-    if (queryParams.firstName) {
-        userToUpdate.firstName = queryParams.firstName;
+    if (params.firstName) {
+        userToUpdate.firstName = params.firstName;
     }
 
-    if (queryParams.lastName) {
-        userToUpdate.lastName = queryParams.lastName;
+    if (params.lastName) {
+        userToUpdate.lastName = params.lastName;
     }
 
-    if (queryParams.age) {
-        userToUpdate.age = parseInt(queryParams.age);
+    if (params.age) {
+        userToUpdate.age = parseInt(params.age);
     }
 
-    UsersDataSource.updateUser(
-        userToUpdate,
-        err => {
-            callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while creating user',
-                input: event,
-                context: err,
-                statusCode: err.statusCode
-            }));
+    UsersDTO.update(userToUpdate.id, userToUpdate)
+        .then(results => {
+            callback(null, ResponseHelper.generateSuccessResponse({ results }));
             context.done();
-        },
-        updatedUser => {
-            callback(null, ResponseHelper.generateSuccessResponse({
-                results: updatedUser
-            }));
-            context.done();
-        }
-    );
+        })
+        .catch(err => {
+                callback(null, ResponseHelper.generateErrorResponse({
+                    error: 'Error while updating user',
+                    input: event,
+                    context: err,
+                    statusCode: err.statusCode
+                }));
+                context.done();
+            }
+        );
 };
 
 /**
@@ -214,7 +205,7 @@ module.exports.update = (event, context, callback) => {
  *
  * @apiParam {Number} id Existing user unique ID.
  *
- * @apiSuccess {Number} id  User Id.
+ * @apiSuccess {String} id  User Id.
  * @apiSuccess {String} firstName User First Name.
  * @apiSuccess {String} lastName User Last Name.
  * @apiSuccess {Number} age Age of the user
@@ -235,24 +226,21 @@ module.exports.delete = (event, context, callback) => {
         return ;
     }
 
-    const userIdToDelete = parseInt(queryParams.id);
+    const userIdToDelete = queryParams.id;
 
-    UsersDataSource.deleteUser(
-        userIdToDelete,
-        err => {
-            callback(null, ResponseHelper.generateErrorResponse({
-                error: 'Error while deleting user',
-                input: event,
-                context: err,
-                statusCode: err.statusCode
-            }));
+    UsersDTO.delete(userIdToDelete)
+        .then(results => {
+            callback(null, ResponseHelper.generateSuccessResponse({ results }));
             context.done();
-        },
-        deletedUser => {
-            callback(null, ResponseHelper.generateSuccessResponse({
-                results: deletedUser
-            }));
-            context.done();
-        }
-    );
+        })
+        .catch(err => {
+                callback(null, ResponseHelper.generateErrorResponse({
+                    error: 'Error while deleting user',
+                    input: event,
+                    context: err,
+                    statusCode: err.statusCode
+                }));
+                context.done();
+            }
+        );
 };

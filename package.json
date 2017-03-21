@@ -14,16 +14,18 @@
     "test-report": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover --include-all-sources --root ./src node_modules/.bin/_mocha --report lcovonly -- --timeout 5000 -u tdd --recursive tests/** && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "install:prod": "(cd ./build/ && npm install --production)",
     "build:app": "./node_modules/.bin/babel src --out-dir build/",
-    "deploy:app": "(cd build && ../node_modules/.bin/serverless deploy --region eu-west-1)",
+    "deploy:app": "(cd build && ../node_modules/.bin/serverless deploy)",
     "build:doc": "node ./scripts/generateApidocConfig.js && ./node_modules/.bin/apidoc -i src -o doc",
     "deploy:doc": "node ./scripts/deployToS3.js",
-    "redeploy": "npm run clean && cp src/config.js build/ && cp package.json build/ && cp src/serverless.yml build/ && npm run install:prod && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
+    "copy:configs": "cp src/config.js build/ && cp package.json build/ && sed \"s@%branch%@${CIRCLE_BRANCH}@\" src/serverless.yml > build/serverless.yml",
+    "redeploy": "npm run clean && npm run copy:configs && npm run install:prod && npm run build:app && npm run deploy:app && npm run build:doc && npm run deploy:doc"
   },
   "author": "Roman Shuvaryk <xcomanche@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "apidoc": "^0.17.5",
     "aws-sdk": "^2.16.0",
+    "s3": "^4.4.0",
     "aws-sdk-mock": "^1.6.1",
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
@@ -42,5 +44,8 @@
     "require-reload": "^0.2.2",
     "serverless": "^1.8.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "querystring": "^0.2.0",
+    "uuid": "3.0.0"
+  }
 }
