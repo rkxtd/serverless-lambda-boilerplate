@@ -134,3 +134,16 @@ describe( 'collections/BaseCollection create', function() {
             });
     });
 });
+
+describe( 'collections/BaseCollection update', function() {
+    it('should throw exception if id changed', done => {
+        const collection = new BaseCollection(Object.assign({}, new MockDriver()));
+
+        try {
+            collection.update(5, {id: 9})
+        } catch (e) {
+            expect(e.message).to.eq('collection.UPDATE_ERROR:ID_CHANGE_FORBIDDEN');
+            done();
+        }
+    });
+});

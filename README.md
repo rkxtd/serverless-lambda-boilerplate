@@ -40,13 +40,24 @@ The main goal of this Project is to have structured approach to develop, test, b
 1. To test demo version of the app hit `npm run redeploy`
 
 ## NPM Commands
-1. `npm run clean` - Clean <b>build</b> folder
-1. `npm run test` - Run unit tests
+1. `clean` - Clean <b>build</b> folder
+1. `test` - Run unit tests
 1. `build:app` - Build <b>lambda</b> functions from <b>src/</b> folders into <b>build/</b> folder
 1. `deploy:app` - Deploy <b>lambda</b> functions from <b>build/</b> folder into <b>AWS account</b>
 1. `build:doc` - Build <b>API Doc</b> from <b>src/</b> folder into <b>doc/</b> folder
 1. `deploy:doc` - Deploy <b>API Doc</b> from <b>doc/</b> folder into <b>AWS S3</b> bucket
 1. `redeploy` - Runs sequentially `npm run clean` than `build:app` than `deploy:app` than `build:doc` than `deploy:doc`
+
+## Deployment
+1. `npm run redeploy` should do the trick and deploy your source code to dev environment
+1. In case you want to deploy into another env - than you need to specify BRANCH environment variable. `BRANCH=develop npm run redeploy`
+1. CircleCi always deploys your builds to it default branches environements
+
+Branch to Environment corresponding table:
+* master - prod
+* release/* - stage
+* develop - dev
+* feature-branch - featurebranch
 
 ## Serverless commands
 Follow the documentation on [Serverless project](https://serverless.com/) 
