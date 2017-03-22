@@ -36,7 +36,7 @@ export default class Collection {
     }
 
     findAll(filterFn) {
-        if (typeof filterFn !== 'function') {
+        if (filterFn && typeof filterFn !== 'function') {
             throw new Error('collection.FILTER_FUNCTION_REQUIRED');
         }
         return (filterFn) ? this.items.filter(filterFn) : this.items;

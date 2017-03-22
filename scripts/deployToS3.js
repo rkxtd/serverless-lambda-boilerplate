@@ -7,6 +7,20 @@ var client = s3.createClient({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 });
+var replaced = false;
+var branchEnv = process.env.BRANCH ? process.env.BRANCH : 'dev';
+
+Object.keys(config.branches).forEach(function(branch) {
+    var results = branchEnv.match(config.branches[branch]);
+
+    if(results && results.length) {
+        replaced = true;
+        branchEnv = branch;
+    }
+});
+if (!replaced) {
+    branchEnv = branchEnv.replace('/', '').replace('.', '');
+}
 
 var params = {
     localDir: "./doc",
@@ -15,7 +29,7 @@ var params = {
 
     s3Params: {
         Bucket: config.apidoc.s3,
-        Prefix: process.env.CIRCLE_BRANCH
+        Prefix: branchEnv
     },
 };
 
@@ -33,5 +47,5 @@ uploader.on('progress', function() {
     }
 });
 uploader.on('end', function() {
-    console.log("New APIDOC deployed. Visit: ", config.apidoc.url + '/' + process.env.CIRCLE_BRANCH);
+    console.log("New APIDOC deployed. Visit: ", config.apidoc.url + '/' + branchEnv);
 });
