@@ -43,7 +43,8 @@
     "require-reload": "^0.2.2",
     "s3": "^4.4.0",
     "serverless": "^1.8.0",
-    "yamljs": "^0.2.8"
+    "yamljs": "^0.2.8",
+    "yargs": "^7.0.2"
   },
   "dependencies": {
     "querystring": "^0.2.0",

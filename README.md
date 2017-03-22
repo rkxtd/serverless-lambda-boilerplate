@@ -50,7 +50,7 @@ The main goal of this Project is to have structured approach to develop, test, b
 
 ## Deployment
 1. `npm run redeploy` should do the trick and deploy your source code to dev environment
-1. In case you want to deploy into another env - than you need to specify BRANCH environment variable. `BRANCH=develop npm run redeploy`
+1. In case you want to deploy into another env - than you need to specify correct env environment variable. `npm run redeploy -- --env dev`. Supported environments: dev, stage, prod and any other feature branches environements
 1. CircleCi always deploys your builds to it default branches environements
 
 Branch to Environment corresponding table:
