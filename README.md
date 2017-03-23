@@ -16,6 +16,7 @@ The main goal of this Project is to have structured approach to develop, test, b
 - [x] Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
 - [x] Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
 - [x] Configured CI integration
+- [x] Independent branches deployment
 - [x] All kinds of badges
 - [ ] Automated API versioning based on NPM versioning (version of API correspond version in package.json)
 - [ ] Local development environment with possibility to run lambda functions and navigate thought generated APIDOC
