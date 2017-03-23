@@ -16,6 +16,7 @@ The main goal of this Project is to have structured approach to develop, test, b
 - [x] Installed Karma tests runner with 100% code coverage, and corrals tests reporter. 
 - [x] Installed and configured APIDOC generator, with automated deployment to S3 Bucket and static webhosting.
 - [x] Configured CI integration
+- [x] Independent branches deployment
 - [x] All kinds of badges
 - [ ] Automated API versioning based on NPM versioning (version of API correspond version in package.json)
 - [ ] Local development environment with possibility to run lambda functions and navigate thought generated APIDOC
@@ -50,14 +51,14 @@ The main goal of this Project is to have structured approach to develop, test, b
 
 ## Deployment
 1. `npm run redeploy` should do the trick and deploy your source code to dev environment
-1. In case you want to deploy into another env - than you need to specify correct env environment variable. `npm run redeploy -- --env dev`. Supported environments: dev, stage, prod and any other feature branches environements
+1. In case you want to deploy into another env - than you need to specify correct env environment variable. `BRANCH=develop npm run redeploy`. Supported environments: dev, stage, prod and any other feature branches environements
 1. CircleCi always deploys your builds to it default branches environements
 
 Branch to Environment corresponding table:
 * master - prod
 * release/* - stage
 * develop - dev
-* feature-branch - featurebranch
+* feature/number - featurenumber (eg feature/1 -> feature1)
 
 ## Serverless commands
 Follow the documentation on [Serverless project](https://serverless.com/) 
