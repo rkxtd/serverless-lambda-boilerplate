@@ -96,25 +96,6 @@ describe( 'collections/BaseCollection findOne', function() {
 });
 
 describe( 'collections/BaseCollection create', function() {
-    it('should create new item', done => {
-        const collection = new BaseCollection(Object.assign({}, new MockDriver(), {
-            create: (record) => {
-                record.id = 'NEW_ID';
-
-                return Promise.resolve(record);
-            }
-        }));
-
-        collection.create({c: 3})
-            .then(response => {
-                expect(response.status).to.be.eq('collection.CREATE_SUCCESS');
-                expect(response.record.id).to.be.eq('NEW_ID');
-                expect(response.record.c).to.be.eq(3);
-
-                done();
-            });
-    });
-
     it('should catch error while creating new item', done => {
         const collection = new BaseCollection(Object.assign({}, new MockDriver(), {
             create: (record) => {

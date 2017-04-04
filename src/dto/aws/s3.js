@@ -37,6 +37,9 @@ export default class S3Driver {
                 return this.save(items)
             }, error => {
                 throw new Error('Failed to receive. Error: ', error.message)
+            })
+            .then(() => {
+                return this.list()
             });
     }
 
@@ -51,6 +54,9 @@ export default class S3Driver {
                 });
 
                 return this.save(items)
+            })
+            .then(() => {
+                return this.list()
             });
     }
 
@@ -65,6 +71,9 @@ export default class S3Driver {
                 });
 
                 return this.save(items)
+            })
+            .then(() => {
+                return this.list()
             });
     }
 

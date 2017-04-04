@@ -60,7 +60,8 @@ module.exports.user = (event, context, callback) => {
             .get(userId)
             .then((user) => {
                 callback(null, ResponseHelper.generateSuccessResponse({
-                    results: user
+                    results: user,
+                    total: 1
                 }));
                 context.done();
             })
@@ -99,6 +100,7 @@ module.exports.create = (event, context, callback) => {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'firstName and lastName are required',
             input: event,
+            decodedBody: params,
             statusCode: 200
         }));
         context.done();
@@ -112,8 +114,14 @@ module.exports.create = (event, context, callback) => {
     };
 
     UsersDTO.create(newUser)
-        .then(results => {
-            callback(null, ResponseHelper.generateSuccessResponse({ results }));
+        .then(users => {
+            if (users.error) {
+                throw new Error(users.error);
+            }
+            callback(null, ResponseHelper.generateSuccessResponse({
+                results: users,
+                total: users.length
+            }));
             context.done();
         })
         .catch(err => {
@@ -180,8 +188,15 @@ module.exports.update = (event, context, callback) => {
     }
 
     UsersDTO.update(userToUpdate.id, userToUpdate)
-        .then(results => {
-            callback(null, ResponseHelper.generateSuccessResponse({ results }));
+        .then(users => {
+            if (users.error) {
+                throw new Error(users.error);
+            }
+
+            callback(null, ResponseHelper.generateSuccessResponse({
+                results: users,
+                total: users.length
+            }));
             context.done();
         })
         .catch(err => {
@@ -229,8 +244,14 @@ module.exports.delete = (event, context, callback) => {
     const userIdToDelete = queryParams.id;
 
     UsersDTO.delete(userIdToDelete)
-        .then(results => {
-            callback(null, ResponseHelper.generateSuccessResponse({ results }));
+        .then(users => {
+            if (users.error) {
+                throw new Error(users.error);
+            }
+            callback(null, ResponseHelper.generateSuccessResponse({
+                results: users,
+                total: users.length
+            }));
             context.done();
         })
         .catch(err => {

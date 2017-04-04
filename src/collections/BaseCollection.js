@@ -54,11 +54,8 @@ export default class Collection {
 
         return this.dtoDriver
             .create(record)
-            .then(() => {
-                return {
-                    status: 'collection.CREATE_SUCCESS',
-                    record
-                }
+            .then((items) => {
+                return items;
             }, error => {
                 return {
                     status: 'collection.CREATE_ERROR',
@@ -82,11 +79,8 @@ export default class Collection {
                 return Object.assign(record, this.getValues(this.getDefaultFields()), existedRecord, newFields);
             })
             .then(record => this.dtoDriver.update(record))
-            .then(() => {
-                return {
-                    status: 'collection.UPDATE_SUCCESS',
-                    record
-                }
+            .then((items) => {
+                return items
             })
             .catch(error => {
                 return {
@@ -104,11 +98,8 @@ export default class Collection {
 
         return this.dtoDriver
             .delete({id})
-            .then(() => {
-                return {
-                    status: 'collection.DELETE_SUCCESS',
-                    id: {id}
-                }
+            .then((items) => {
+                return items
             })
             .catch(error => {
                 return {

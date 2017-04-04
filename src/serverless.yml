@@ -13,23 +13,84 @@ provider:
          Resource: arn:aws:s3:::*
 
 functions:
-  usersGet: # A Function
+  usersGet:
     handler: userHandler.users
-    events: # The Events that trigger this Function
-      - http: get users
-  userGet: # A Function
+    events:
+      - http:
+          path: users
+          method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
+  userGet:
     handler: userHandler.user
-    events: # The Events that trigger this Function
-      - http: get user
-  userCreate: # A Function
+    events:
+      - http:
+          path: user
+          method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
+
+  userCreate:
     handler: userHandler.create
-    events: # The Events that trigger this Function
-      - http: post user
-  userUpdate: # A Function
+    events:
+      - http:
+          path: user
+          method: post
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
+  userUpdate:
     handler: userHandler.update
-    events: # The Events that trigger this Function
-      - http: put user
-  userDelete: # A Function
+    events:
+      - http:
+          path: user
+          method: put
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
+  userDelete:
     handler: userHandler.delete
-    events: # The Events that trigger this Function
-      - http: delete user
+    events:
+      - http:
+          path: user
+          method: delete
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
