@@ -52,7 +52,7 @@ module.exports.user = (event, context, callback) => {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'User ID is required.',
             input: event,
-            statusCode: 502
+            statusCode: 200
         }));
         context.done();
     } else {
@@ -99,7 +99,7 @@ module.exports.create = (event, context, callback) => {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'firstName and lastName are required',
             input: event,
-            statusCode: 502
+            statusCode: 200
         }));
         context.done();
         return ;
@@ -156,7 +156,7 @@ module.exports.update = (event, context, callback) => {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'User ID is required',
             input: event,
-            statusCode: 502
+            statusCode: 200
         }));
 
         context.done();
@@ -219,7 +219,7 @@ module.exports.delete = (event, context, callback) => {
         callback(null, ResponseHelper.generateErrorResponse({
             error: 'User ID is required',
             input: event,
-            statusCode: 502
+            statusCode: 200
         }));
 
         context.done();

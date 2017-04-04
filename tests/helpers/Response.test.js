@@ -22,6 +22,6 @@ describe( 'helpers/Response generateErrorResponse', function() {
     });
 
     it('generateErrorResponse Empty', () => {
-        expect(JSON.stringify(generateErrorResponse())).to.be.eq('{"statusCode":500,"body":"{\\"error\\":\\"Middleware. Unknown error\\"}"}');
+        expect(JSON.stringify(generateErrorResponse())).to.be.eq('{"statusCode":200,"body":"{\\"error\\":\\"Middleware. Unknown error\\"}"}');
     });
 });
